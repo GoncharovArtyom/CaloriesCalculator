@@ -110,3 +110,15 @@ exports.findUserByEmail = function (email, done){
         }
     })
 }
+
+exports.findRecipesByUserId = function(user_id, done){
+    var pool = state.pool;
+    pool.query('select * from recipes where user_id = '+"'"+user_id+"'", function(err, result) {
+            if (err){
+                console.log("Error while finding recipes by user_id");
+                done(new Error("Error while finding recipes by user_id"));
+            } else {
+                done(null, result);
+            }
+    });
+}

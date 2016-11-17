@@ -24,7 +24,7 @@ var sessionStore = new MySQLStore({
 
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var mainpage = require('./routes/mainpage');
 
 var db = require('./db.js');
 
@@ -71,22 +71,22 @@ db.drop(tables,function(){
 db.fixtures(data,function(){
   console.log('inserted!');
 })*/
-
+/*
 var user  = {
   user_name:'Kolya',
   user_password: '4321',
   user_email: 'qwer@r.ru'
 };
-db.findUserByEmail('0980000@mail.ru',function(err, result){
+db.findUserByEmail('098@mail.ru',function(err, result){
   if (result){
     console.log(result);
   } else {
     console.log('Did not find');
   }
 })
-
+*/
 app.use('/', index);
-app.use('/users', users);
+app.use('/mainpage', mainpage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -96,11 +96,20 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+app.use(function(err, req, res, next){
+    if (req.errStatus){
+        console.log(req.errStatus);
+        console.log(err.message)
+        res.sendStatus(401)
+    } else {
+        next(err)
+    }
+})
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+    console.log(err)
   // render the error page
   res.status(err.status || 500);
   res.render('error');

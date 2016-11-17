@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    script(type="text/javascript" src="/javascripts/mainpage.js")
+    h1 Hello, #{user_name}!
+
+    - if (recipes.length == 0)
+        div You haven't got recipes yet
+    - else {
+        table#recipe_table
+            tr
+                th Название
+                th Белки
+                th Жиры
+                th Углеводы
+                th Калории
+            - for (var i=0; i<recipes.length; ++i){
+                tr(id= recipes[i].recipe_id)
+                    td= recipes[i].recipe_name
+                    td= recipes[i].proteins
+                    td= recipes[i].lipids
+                    td= recipes[i].carbs
+                    td= recipes[i].calories
+            - };
+    - };
+
+    form
+        div
+            input(type="button" name="exit" id="exit" value="Выйти")
+

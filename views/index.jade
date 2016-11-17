@@ -1,5 +1,21 @@
 extends layout
 
 block content
+  script(type="text/javascript" src="/javascripts/index.js")
   h1= title
-  p Welcome to #{title}
+  p#message Welcome to #{title}
+  form
+    div.input
+      input#email(type='text' name='login')
+      label(for='email') Email
+    div.input#divname(style='display:none')
+      input#name(type='text' name='name')
+      label(for='name') Name
+    div.input
+      input#password(type='password' name='password')
+      label(for='password') Password
+    div.input
+      input#register(type='checkbox' name='checkbox')
+      label(for='register') Registration
+    div.input
+      input#button(type='button' name='send' value='Войти')
