@@ -152,3 +152,17 @@ exports.deleteRecipeById = function(recipe_id, done){
         }
     })
 }
+
+exports.getFood = function(done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+
+    pool.query('select * from food', function(err, result){
+        if (err) {
+            console.log('error while finding food');
+            done(new Error('error while finding food'),null);
+        } else {
+            done(false, result);
+        }
+    })
+}

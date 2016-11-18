@@ -69,4 +69,14 @@ router.get('/logout', function(req, res, next){
   res.sendStatus(200);
 });
 
+router.get('/createrecipe', function(req, res, next){
+  db.getFood(function(err, data){
+    if (err){
+      next(err);
+    } else {
+      res.json(data);
+    }
+  })
+})
+
 module.exports = router;
