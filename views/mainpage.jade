@@ -1,6 +1,47 @@
 extends layout
 
 block content
+    link(rel='stylesheet', href='/stylesheets/mainpagestyle.css')
+    script(type="text/javascript" src="/javascripts/mainpage.js")
+    h1 Hello, #{user_name}!
+    form
+        div
+            input(type="button" name="exit" id="exit" value="Выйти")
+    h2 Recipes
+    - if (recipes.length == 0)
+        div#message You haven't got recipes yet
+    - else {
+        div#message
+        div#recipe_table
+            div#title.rowtitle.clearfix
+                div.floatleft.coltitle Название
+                div.floatleft.coltitle Белки
+                div.floatleft.coltitle Жиры
+                div.floatleft.coltitle Углеводы
+                div.floatright.coltitle Калории
+            - for (var i=0; i<recipes.length; ++i){
+                div(id= recipes[i].recipe_id).row.clearfix
+                    div.floatleft= recipes[i].recipe_name
+                    div.floatleft= recipes[i].proteins
+                    div.floatleft= recipes[i].lipids
+                    div.floatleft= recipes[i].carbs
+                    div.floatright= recipes[i].calories
+                div(id= recipes[i].recipe_id + 'ingr').ingr
+                    div.rowtitle2.clearfix
+                        div.floatleft2.coltitle2 Ингридиенты
+                        div.floatright2.coltitle2 Количество
+                    -for (var j=0; j<recipes[i].data.length; ++j) {
+                        div.row2.clearfix
+                            div.floatleft2= recipes[i].data[j].name
+                            div.floatright2= recipes[i].data[j].amount + ' гр'
+                    - }
+                    div(del_id= recipes[i].recipe_id).delete  Удалить
+            -}
+    -}
+
+
+
+//block content
     script(type="text/javascript" src="/javascripts/mainpage.js")
     h1 Hello, #{user_name}!
 

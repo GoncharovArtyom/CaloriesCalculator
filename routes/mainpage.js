@@ -16,10 +16,52 @@ router.get('/',restrict, function(req, res, next) {
         req.errStatus = 4;
         next(err);
       } else {
-        console.log(result.length)
-        res.render('mainpage',{user_name:req.session.user_name, recipes:result});
+        if (result.length == 0) {
+          res.render('mainpage', {user_name: req.session.user_name, recipes: result});
+        } else {
+          var recipe_ids = [];
+          for (var i = 0; i < result.length; ++i)
+            recipe_ids.push(result[i].recipe_id);
+          db.findFoodByListOfRecipeIds(recipe_ids, function (err, result2) {
+            if (err) {
+              req.errStatus = 4;
+              next(err);
+            } else {
+              var getRecipeById = {}
+
+              for (var i = 0; i < result.length; ++i)
+                getRecipeById[result[i].recipe_id] = result[i];
+
+              for (var key in getRecipeById) {
+                getRecipeById[key].data = []
+              }
+
+              for (var i = 0; i < result2.length; ++i) {
+                var ingridients = {
+                  name: result2[i].food_name,
+                  amount: result2[i].amount
+                }
+                getRecipeById[result2[i].recipe_id].data.push(ingridients);
+              }
+              res.render('mainpage', {user_name: req.session.user_name, recipes: result});
+            }
+          })
+
+        }
       }
   });
+});
+
+router.post('/delete',restrict, function(req, res, next){
+    if (req.body.recipe_id) {
+        db.deleteRecipeById(req.body.recipe_id, function(err, result){
+          if(err){
+            next(err);
+          } else {
+            res.sendStatus(200);
+          }
+        });
+    }
 });
 
 router.get('/logout', function(req, res, next){

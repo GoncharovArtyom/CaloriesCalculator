@@ -122,3 +122,33 @@ exports.findRecipesByUserId = function(user_id, done){
             }
     });
 }
+
+exports.findFoodByListOfRecipeIds = function(recipe_id, done){
+    var pool = state.pool;
+    pool.query('select recipe_id, food_name, amount from recipes_food ' +
+        'join food on food.food_id = recipes_food.food_id ' +
+        'where recipe_id in ('+recipe_id.join(', ')+ ') ' +
+        'order by recipe_id',
+        function(err, result) {
+        if (err){
+            console.log(err);
+            done(new Error("Error while finding food by recipe_id"));
+        } else {
+            done(null, result);
+        }
+    });
+}
+
+exports.deleteRecipeById = function(recipe_id, done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+
+    pool.query('delete from recipes where recipe_id = '+"'"+recipe_id+"'", function(err, result){
+        if (err) {
+            console.log('error while deleting recipe');
+            done(new Error('error while deleting recipe'),null);
+        } else {
+            done(false, true);
+        }
+    })
+}

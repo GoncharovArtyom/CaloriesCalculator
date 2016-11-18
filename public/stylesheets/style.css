@@ -14,3 +14,8 @@ label{
   margin-right:5px;
   margin-left:5px;
 }
+#maindiv{
+  width:25%;
+  margin-right: auto;
+  margin-left: auto;
+}
