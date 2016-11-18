@@ -106,15 +106,156 @@ $(document).ready( function(){
                     newDiv.text(data[i].food_name);
                     $("#foodtable").append(newDiv)
                 }
-                $("#addrecipe").unbind('click', handlerGetFood);
+
+                //Обработчики для обавления продукта
+                $(".divfood").mouseenter(mouse1).mouseleave(mouse2);
+                $(".divfood").click(function(){
+                    if ($('#resamount').prop('disabled'))
+                        $('#resamount').prop('disabled', false);
+                    //Создание строчки
+                   var newDivIngrRow = $(document.createElement('div'));
+                   newDivIngrRow.attr('food_id',$(this).attr('food_id'));
+                    newDivIngrRow.attr('proteins',$(this).attr('proteins'));
+                    newDivIngrRow.attr('lipids',$(this).attr('lipids'));
+                    newDivIngrRow.attr('carbs',$(this).attr('carbs'));
+                    newDivIngrRow.attr('calories',$(this).attr('calories'));
+                   newDivIngrRow.addClass('ingrrow');
+                    newDivIngrRow.addClass('clearfix');
+                    //Столбец
+                    var newDiv = $(document.createElement('div'));
+                    newDiv.addClass('ingrcol');
+                    newDiv.text($(this).text());
+                    newDivIngrRow.append(newDiv);
+                    //Столбец
+                    newDiv = $(document.createElement('input'));
+                    newDiv.addClass('ingrcolright');
+                    newDiv.addClass('inputweight');
+                    newDiv.attr('type','text');
+                    newDiv.attr('amount','100');
+                    newDiv.val(100);
+                    $("#resamount").val(+$("#resamount").val() + 100);
+                    $("#resamount").attr('amount', $("#resamount").val())
+                    newDiv.keyup(function(){
+
+                        if(isWeightGhanged){
+                            $("#resproteins").text($("#resproteins").attr('amount'));
+                            $("#rescarbs").text($("#rescarbs").attr('amount'));
+                            $("#reslipids").text($("#reslipids").attr('amount'));
+                            $("#rescalories").text($("#rescalories").attr('amount'));
+                            $("#resamount").val($("#resamount").attr('amount'));
+
+                            isWeightGhanged = false;
+                        }
+
+                        var weight = $(this).val();
+                        if (weight == '' || weight == '0'){
+                            weight = 0;
+                        }
+                        var siblings = $(this).siblings('.ingrcolright');
+                        var parent = $(this).parent();
+                        var data = Math.round(parent.attr('calories')*weight/100);
+                        $(siblings[0]).text(data);
+                        $("#rescalories").text(+$("#rescalories").text() - +$(siblings[0]).attr('amount') + data);
+                        $("#rescalories").attr('amount', $("#rescalories").text())
+                        $(siblings[0]).attr('amount',data);
+
+                        data = Math.round(parent.attr('carbs')*weight/100);
+                        $(siblings[1]).text(data);
+                        $("#rescarbs").text(+$("#rescarbs").text() - +$(siblings[1]).attr('amount') + data);
+                        $("#rescarbs").attr('amount', $("#rescarbs").text())
+                        $(siblings[1]).attr('amount',data);
+
+                        data = Math.round(parent.attr('lipids')*weight/100);
+                        $(siblings[2]).text(data);
+                        $("#reslipids").text(+$("#reslipids").text() - +$(siblings[2]).attr('amount') + data);
+                        $("#reslipids").attr('amount', $("#reslipids").text())
+                        $(siblings[2]).attr('amount',data);
+
+                        data = Math.round(parent.attr('proteins')*weight/100);
+                        $(siblings[3]).text(data);
+                        $("#resproteins").text(+$("#resproteins").text() - +$(siblings[3]).attr('amount') + data);
+                        $("#resproteins").attr('amount', $("#resproteins").text())
+                        $(siblings[3]).attr('amount',data);
+
+                        $("#resamount").val(+$("#resamount").val() - +$(this).attr('amount') + +weight);
+                        $("#resamount").attr('amount', $("#resamount").val())
+                        $(this).attr('amount',weight);
+                        console.log($("#resamount").val())
+
+                    });
+                    newDivIngrRow.append(newDiv);
+                    //Столбец
+                    newDiv = $(document.createElement('div'));
+                    newDiv.addClass('ingrcolright');
+                    var data = $(this).attr('calories')
+                    $('#rescalories').text(Number($('#rescalories').text()) + +data)
+                    $("#rescalories").attr('amount', $("#rescalories").text())
+                    newDiv.text(data);
+                    newDiv.attr('amount', data);
+                    newDivIngrRow.append(newDiv);
+                    //Столбец
+                    newDiv = $(document.createElement('div'));
+                    newDiv.addClass('ingrcolright');
+                    data = $(this).attr('carbs')
+                    $('#rescarbs').text(Number($('#rescarbs').text()) + +data)
+                    $("#rescarbs").attr('amount', $("#rescarbs").text())
+                    newDiv.text(data);
+                    newDiv.attr('amount', data);
+                    newDivIngrRow.append(newDiv);
+                    //Столбец
+                    newDiv = $(document.createElement('div'));
+                    newDiv.addClass('ingrcolright');
+                    data = $(this).attr('lipids')
+                    $('#reslipids').text(Number($('#reslipids').text()) + +data)
+                    $("#reslipids").attr('amount', $("#reslipids").text())
+                    newDiv.text(data);
+                    newDiv.attr('amount', data);
+                    newDivIngrRow.append(newDiv);
+                    //Столбец
+                    newDiv = $(document.createElement('div'));
+                    newDiv.addClass('ingrcolright');
+                    data = $(this).attr('proteins')
+                    $('#resproteins').text(Number($('#resproteins').text()) + +data)
+                    $("#resproteins").attr('amount', $("#resproteins").text())
+                    newDiv.text(data);
+                    newDiv.attr('amount', data);
+                    newDivIngrRow.append(newDiv);
+
+                    $(newDivIngrRow).dblclick(function(){
+                        if($("#ingrtable").children().length == 2)
+                            $('#resamount').prop('disabled', true);
+
+                       $(this).hide('fast');
+                        elem = $(this)
+                        var children = elem.children();
+                        $("#rescalories").text(+$("#rescalories").text() - +$(children[2]).attr('amount'));
+                        $("#rescalories").attr('amount', $("#rescalories").text())
+                        $("#rescarbs").text(+$("#rescarbs").text() - +$(children[3]).attr('amount'));
+                        $("#rescarbs").attr('amount', $("#rescarbs").text())
+                        $("#reslipids").text(+$("#reslipids").text() - +$(children[4]).attr('amount'));
+                        $("#reslipids").attr('amount', $("#reslipids").text())
+                        $("#resproteins").text(+$("#resproteins").text() - +$(children[5]).attr('amount'));
+                        $("#resproteins").attr('amount', $("#resproteins").text())
+                        $("#resamount").val(+$("#resamount").val() - +$(children[1]).attr('amount'));
+                        $("#resamount").attr('amount', $("#resamount").val())
+
+                        setTimeout(function(){
+                            elem.detach();
+                        },200)
+                    });
+                    $(newDivIngrRow).mouseenter(mouse1).mouseleave(mouse2);
+                    //Добавление элемента
+                    $("#ingrtable").append(newDivIngrRow)
+                });
             },
             error: function () {
                 $("#errmessage").text('Ошибка сервера')
             },
             dataType: 'json'
         })
-    }
-    $("#addrecipe").click(handlerGetFood);
+    };
+    //$("#addrecipe").click(handlerGetFood);
+    handlerGetFood();
     $("#addrecipe").click(handlerCreate1);
     $("#addrecipe").mouseenter(mouseRes1).mouseleave(mouseRes2);
 
@@ -125,7 +266,6 @@ $(document).ready( function(){
     $("#search").keyup(function(){
         var divArray = $('.divfood');
         var reg = new RegExp($("#search").val(),'i');
-        console.log(reg);
         for (var i=0; i<divArray.length; ++i){
             var text = $(divArray[i]).text();
             if(text.search(reg) == -1){
@@ -136,5 +276,31 @@ $(document).ready( function(){
                 $(divArray[i]).removeClass('invisiblefood');
             }
         }
+    });
+
+    //Изменение общего веса
+    var isWeightGhanged = false;
+    $("#resamount").keyup(function(){
+
+        isWeightGhanged = true;
+
+        var weight = $(this).val()
+        var amount = $(this).attr('amount');
+        var rescalories = $('#rescalories');
+        var reslipids = $('#reslipids');
+        var rescarbs = $('#rescarbs');
+        var resproteins = $("#resproteins");
+
+        if (weight == '') weight = 0;
+        rescalories.text(Math.round(rescalories.attr('amount')*weight/amount));
+        reslipids.text(Math.round(reslipids.attr('amount')*weight/amount));
+        rescarbs.text(Math.round(rescarbs.attr('amount')*weight/amount));
+        resproteins.text(Math.round(resproteins.attr('amount')*weight/amount));
+    })
+
+    //Обнуление имени
+    $("#nameinput").click(function(){
+        if($(this).val() == "Название")
+            $(this).val('');
     })
 });

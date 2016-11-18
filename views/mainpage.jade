@@ -45,8 +45,27 @@ block content
         div#add1
             div#title1 Ингридиенты
             div#ingrtable
-            div#amount
-                div#resweight Общий вес:
+                div.ingrrow.clearfix
+                    div.ingrcol.ingrtitle Название
+                    div.ingrcolright.ingrtitle Вес
+                    div.ingrcolright.ingrtitle К
+                    div.ingrcolright.ingrtitle У
+                    div.ingrcolright.ingrtitle Ж
+                    div.ingrcolright.ingrtitle Б
+
+
+
+            div#amount.clearfix
+                div#resweight.ingrcol Итого:
+                input#resamount.ingrcolright(type= 'text' value= 0 amount= 0 disabled)
+                div#rescalories.ingrcolright(amount= 0) 0
+                div#rescarbs.ingrcolright(amount= 0) 0
+                div#reslipids.ingrcolright(amount= 0) 0
+                div#resproteins.ingrcolright(amount= 0) 0
+            div#name
+                input#nameinput(value= 'Название')
+
+
         div#add2
             div#title2 Продукты
             input#search(type= 'text' value= 'Поиск')

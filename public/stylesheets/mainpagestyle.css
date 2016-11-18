@@ -118,14 +118,14 @@
 /*Добавление рецепта*/
 #add{
     margin-right:auto;
-    width:550px;
+    width:650px;
     padding:2px;
     padding-right:11px;
 }
 
 #add1{
     float:left;
-    width: 300px;
+    width: 400px;
 }
 #add2{
     float:right;
@@ -140,7 +140,7 @@
     border-radius: 5px;
     padding: 4px;
     text-align: center;
-    width: 550px;
+    width: 650px;
 }
 #title1{
     text-align: center;
@@ -152,18 +152,18 @@
 }
 
 #ingrtable{
-    width:290px;
+    width:383px;
     height:400px;
     margin-right:3px;
     margin-left:0px;
     border: black solid 2px;
     border-radius: 5px;
-    padding:2px;
+    padding:5px;
     overflow-y:auto;
 }
 
 #amount{
-    width:290px;
+    width:384px;
     margin-right:3px;
     margin-left:0px;
     border: black solid 2px;
@@ -171,6 +171,10 @@
     padding: 2px;
     margin-top:5px;
     margin-bottom: 5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    padding-right:5px;
 }
 
 #search{
@@ -184,7 +188,7 @@
 }
 #foodtable{
     width:250px;
-    height:400px;
+    height:458px;
     margin-right:0px;
     margin-left:3px;
     margin-top:5px;
@@ -202,4 +206,51 @@
 }
 .invisiblefood{
     display: none;
+}
+.divfood{
+    padding:2px;
+}
+
+.ingrrow{
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:2px;
+    padding-right:2px;
+}
+.ingrcol{
+    float:left;
+    width:130px;
+    word-wrap: break-word;
+}
+.ingrcolright{
+    text-align: center;
+    width:43px;
+    float:right;
+    margin-left: 2px;
+}
+.ingrtitle{
+    font-style: italic;
+    font-size: medium;
+}
+
+#name{
+    width:384px;
+    margin-right:3px;
+    margin-left:0px;
+    border: black solid 2px;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top:5px;
+    margin-bottom: 5px;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    padding-right:5px;
+}
+#nameinput{
+    display:block;
+    color: grey;
+    width: 380px;
+    margin-left: auto;
+    margin-right: auto;
 }
