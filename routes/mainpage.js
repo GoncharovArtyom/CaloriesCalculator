@@ -77,6 +77,11 @@ router.get('/createrecipe', function(req, res, next){
       res.json(data);
     }
   })
-})
+});
+
+router.post('/add', function(req, res, next){
+  var data = {recipe_id: 4};
+  res.json(data);
+});
 
 module.exports = router;

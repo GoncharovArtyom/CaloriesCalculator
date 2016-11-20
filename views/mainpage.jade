@@ -42,6 +42,7 @@ block content
         -}
     h2#addrecipe Добавить рецепт
     div#add
+        div#addmessage
         div#add1
             div#title1 Ингридиенты
             div#ingrtable
@@ -56,12 +57,20 @@ block content
 
 
             div#amount.clearfix
-                div#resweight.ingrcol Итого:
-                input#resamount.ingrcolright(type= 'text' value= 0 amount= 0 disabled)
-                div#rescalories.ingrcolright(amount= 0) 0
-                div#rescarbs.ingrcolright(amount= 0) 0
-                div#reslipids.ingrcolright(amount= 0) 0
-                div#resproteins.ingrcolright(amount= 0) 0
+                div.clearfix.ingrrow
+                    div#resweight.ingrcol Итого:
+                    input#resamount.ingrcolright(type= 'text' value= 0 amount= 0 disabled)
+                    div#rescalories.ingrcolright 0
+                    div#rescarbs.ingrcolright 0
+                    div#reslipids.ingrcolright 0
+                    div#resproteins.ingrcolright 0
+                div.clearfix.ingrrow
+                    div#weight100.ingrcol На 100 гр:
+                    div#amount100.ingrcolright 100
+                    div#calories100.ingrcolright 0
+                    div#carbs100.ingrcolright 0
+                    div#lipids100.ingrcolright 0
+                    div#proteins100.ingrcolright 0
             div#name
                 input#nameinput(value= 'Название')
 
@@ -73,31 +82,4 @@ block content
         div#createres Создать рецепт
 
 
-//block content
-    script(type="text/javascript" src="/javascripts/mainpage.js")
-    h1 Hello, #{user_name}!
-
-    - if (recipes.length == 0)
-        div You haven't got recipes yet
-    - else {
-        table#recipe_table
-            tr
-                th Название
-                th Белки
-                th Жиры
-                th Углеводы
-                th Калории
-            - for (var i=0; i<recipes.length; ++i){
-                tr(id= recipes[i].recipe_id)
-                    td= recipes[i].recipe_name
-                    td= recipes[i].proteins
-                    td= recipes[i].lipids
-                    td= recipes[i].carbs
-                    td= recipes[i].calories
-            - };
-    - };
-
-    form
-        div
-            input(type="button" name="exit" id="exit" value="Выйти")
 

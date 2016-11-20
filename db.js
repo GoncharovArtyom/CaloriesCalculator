@@ -75,12 +75,13 @@ exports.insertUser = function (data, done) {
     var keys = Object.keys(data)
         , values = keys.map(function(key) { return "'" + data[key] + "'" });
 
-    pool.query('INSERT INTO ' + 'users' + ' (' + keys.join(',') + ') VALUES (' + values.join(',') + ')', function(err){
+    pool.query('INSERT INTO ' + 'users' + ' (' + keys.join(',') + ') VALUES (' + values.join(',') + ')', function(err, result){
         if (err) {
             console.log('error while inserting user data');
             done(err);
+        } else {
+            done(null);
         }
-        done(null);
     });
 
 }

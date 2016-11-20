@@ -188,7 +188,7 @@
 }
 #foodtable{
     width:250px;
-    height:458px;
+    height:494px;
     margin-right:0px;
     margin-left:3px;
     margin-top:5px;
@@ -253,4 +253,8 @@
     width: 380px;
     margin-left: auto;
     margin-right: auto;
+}
+
+#amount100{
+    margin-right: 5px;
 }

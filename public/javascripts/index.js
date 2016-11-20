@@ -12,7 +12,7 @@ $(document).ready( function(){
             alert("Заполните все поля");
         } else {
             var data = {}
-            if ($("#register").attr("checked") == false) {
+            if ($("#register").prop("checked") == false) {
                 data = {user_email:$("#email").val(), user_password:$("#password").val() }
                 $.ajax({
                     url: "http://localhost:3001/login",
