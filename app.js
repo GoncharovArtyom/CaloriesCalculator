@@ -120,3 +120,7 @@ app.listen(3001, function () {
 });
 
 module.exports = app;
+
+var pool = db.get();
+
+//db.startTransaction(function(){});

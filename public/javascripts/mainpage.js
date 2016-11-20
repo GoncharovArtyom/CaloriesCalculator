@@ -366,15 +366,18 @@ $(document).ready( function(){
                 var ingrArray = $("#ingrtable").children("div[food_id]");
 
                 for(var i=0; i<ingrArray.length; ++i){
-                    ingridients.push($(ingrArray[i]).attr('food_id'));
+                    var obj = {}
+                    obj.food_id = $(ingrArray[i]).attr('food_id');
+                    obj.amount = $($(ingrArray[i]).children()[1]).val()
+                    ingridients.push(obj);
                 }
 
                 $.ajax({
                     url: "http://localhost:3001/mainpage/add",
                     type: "POST",
                     data:{
-                        recipeInf: newRecipe,
-                        ingridientsInf: ingridients
+                        recipeInf: JSON.stringify(newRecipe),
+                        ingridientsInf: JSON.stringify(ingridients)
                     },
                     success: function (data) {
                         var recipe_id = data.recipe_id;

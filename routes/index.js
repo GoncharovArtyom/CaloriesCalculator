@@ -39,10 +39,12 @@ router.post('/login',checkDataLogin, function(req, res, next) {
         } else {
             if (result) {
                 if (result.user_password == req.body.user_password) {
+
                     req.session.auth = true
                     req.session.user_name = result.user_name;
                     req.session.user_id = result.user_id;
                     res.sendStatus(200)
+
                 } else {
                     req.errStatus = 1;
                     next(new Error("Incorrect password"))
@@ -76,11 +78,15 @@ router.post('/registration',checkDataReg, function(req, res, next) {
                         req.errStatus = 4;
                         next(new Error("database error while inserting"));
                     } else {
-                        console.log('registred!');
-                        req.session.auth = true
-                        req.session.user_name = user.user_name;
-                        req.session.user_id = user.user_id;
-                        res.sendStatus(200);
+                        db.get().getConnection(function(err, connection) {
+
+                            console.log('registred!');
+                            req.session.auth = true
+                            req.session.user_name = user.user_name;
+                            req.session.user_id = user.user_id;
+                            res.sendStatus(200);
+
+                        })
                     }
                 })
             }

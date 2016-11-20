@@ -22,7 +22,7 @@ router.get('/',restrict, function(req, res, next) {
           var recipe_ids = [];
           for (var i = 0; i < result.length; ++i)
             recipe_ids.push(result[i].recipe_id);
-          db.findFoodByListOfRecipeIds(recipe_ids, function (err, result2) {
+          db.findFoodByListOfRecipeIds( recipe_ids, function (err, result2) {
             if (err) {
               req.errStatus = 4;
               next(err);
@@ -54,7 +54,7 @@ router.get('/',restrict, function(req, res, next) {
 
 router.post('/delete',restrict, function(req, res, next){
     if (req.body.recipe_id) {
-        db.deleteRecipeById(req.body.recipe_id, function(err, result){
+        db.deleteRecipeById( req.body.recipe_id, function(err, result){
           if(err){
             next(err);
           } else {
@@ -80,8 +80,18 @@ router.get('/createrecipe', function(req, res, next){
 });
 
 router.post('/add', function(req, res, next){
-  var data = {recipe_id: 4};
-  res.json(data);
+
+
+  var recipeInf = JSON.parse(req.body.recipeInf);
+  recipeInf.user_id = req.session.user_id;
+  var ingrInf = JSON.parse(req.body.ingridientsInf);
+
+  db.insertNewRecipe(recipeInf, ingrInf, function(err, recipe_id){
+    if(err) return next(err);
+    console.log('done!');
+    res.json({recipe_id: recipe_id});
+  })
+  //res.json(data);
 });
 
 module.exports = router;
