@@ -24,10 +24,6 @@ exports.connect = function(mode, done) {
         database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
     });
 
-    state.pool.on('connection', function (connection) {
-        console.log('id:' + connection.threadId);
-    });
-
     state.mode = mode
     done()
 }
