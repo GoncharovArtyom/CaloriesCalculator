@@ -111,23 +111,28 @@
     width: 200px;
 }
 
+.hoverbutton{
+    background-color: darkgray;
+    color: white;
+}
+
 #showrecipes{
     display:none;
 }
 
-/*Добавление рецепта*/
-#add{
+/*Добавление рецепта и статистика*/
+#add, #stat{
     margin-right:auto;
     width:650px;
     padding:2px;
     padding-right:11px;
 }
 
-#add1{
+#add1, #eaten{
     float:left;
     width: 400px;
 }
-#add2{
+#add2, #statsearch{
     float:right;
     width: 250px;
 
@@ -142,16 +147,16 @@
     text-align: center;
     width: 650px;
 }
-#title1{
+#title1, #eatentitle{
     text-align: center;
     padding:5px;
 }
-#title2{
+#title2, #statsearchtitle{
     text-align: center;
     padding:5px;
 }
 
-#ingrtable{
+#ingrtable, #eatentable{
     width:383px;
     height:400px;
     margin-right:3px;
@@ -162,7 +167,7 @@
     overflow-y:auto;
 }
 
-#amount{
+#amount, #eatenamount{
     width:384px;
     margin-right:3px;
     margin-left:0px;
@@ -177,7 +182,7 @@
     padding-right:5px;
 }
 
-#search{
+#search, #statsearchinput{
     width:250px;
     margin-right:0px;
     margin-left:3px;
@@ -186,7 +191,7 @@
     padding: 2px;
     color: gray;
 }
-#foodtable{
+#foodtable, #statfoodtable{
     width:250px;
     height:494px;
     margin-right:0px;
@@ -201,14 +206,15 @@
 #add{
     display:none;
 }
-.visiblefood{
+.visible{
     display: block;
 }
-.invisiblefood{
+.invisible{
     display: none;
 }
-.divfood{
+.divfood, .recipestat, .foodstat{
     padding:2px;
+    font-weight: initial;
 }
 
 .ingrrow{
@@ -257,4 +263,66 @@
 
 #amount100{
     margin-right: 5px;
+}
+
+#eatentable{
+    height: 470px;
+    overflow-y: auto;
+}
+
+#date{
+    width:400px;
+    margin-bottom: 5px;
+}
+#date input{
+    margin-left:5px;
+}
+
+#date div{
+    display: inline-block;
+    margin-left: 5px;
+    border-radius: 3px;
+    border: black solid 1px;
+    padding: 2px;
+}
+
+#statrecipes, #statfood{
+    font-weight: bold;
+    padding:2px;
+}
+
+.flr{
+    float: right;
+}
+
+.fll{
+    float: left;
+}
+
+.statinput{
+    width:30px;
+    margin-top: 4px;
+    margin-bottom: 5px;
+    margin-right: 18px;
+}
+
+.recipestat{
+
+}
+
+.textdivstat{
+    width: 170px;
+    word-wrap: break-word;
+}
+
+.adddiv{
+    clear: both;
+    background-color: darkgray;
+    color: white;
+    width:70px;
+    margin-left:auto;
+    text-align: center;
+    border-radius: 2px;
+    padding:1px;
+    margin-right:1px;
 }

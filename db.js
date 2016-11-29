@@ -86,7 +86,7 @@ exports.insertUser = function (data, done) {
                 console.log('error while inserting user data');
                 done(err);
             } else {
-                done(null);
+                done(null,result.insertId);
             }
         });
         connection.release();
@@ -177,7 +177,7 @@ exports.deleteRecipeById = function(recipe_id, done){
     })
 }
 
-exports.getFood = function( done){
+exports.getFood = function(done){
     var pool = state.pool;
     pool.getConnection(function(err, connection) {
         if (err) return done(new Error('Missing database connection.'));
@@ -231,3 +231,77 @@ exports.insertNewRecipe = function(recipeInf, ingridientsInf, done){
         connection.release();
     })
 };
+
+exports.getStats = function (user_id, date, done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+    pool.getConnection(function(err, connection) {
+        if(err) return done(new Error('Can\'t create connection.'));
+        var sql = 'select recipes.recipe_name, recipes.recipe_id, null as food_id, amount, proteins, lipids, carbs, recipes.calories from recipe_stats '
+            + ' join recipes on recipes.recipe_id = recipe_stats.recipe_id'
+            + ' where _date = "' + date + '" and recipes.user_id = ' + user_id
+            + ' union all ' +
+        '(select food.food_name, null, food.food_id, amount, proteins, lipids, carbs, food.calories from food_stats '
+        + ' join food on food.food_id = food_stats.food_id'
+        + ' where _date = "' + date + '" and food_stats.user_id = ' + user_id +');';
+        connection.query(sql, function (err, result) {
+            if(err) return done(new Error('Can\'t query for stats.'));
+            done(null, result);
+        });
+    });
+}
+
+exports.delRecipeStat = function(recipe_id, date, done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+    pool.getConnection(function(err, connection) {
+        if (err) return done(new Error('Can\'t create connection.'));
+        var sql = 'delete from recipe_stats where recipe_id = ' + recipe_id + ' and _date = "' + date + '";'
+        connection.query(sql, function(err){
+            //console.log(sql);
+            //console.log(err);
+            if (err) done(new Error("Err while deleting recipe stat"));
+            else done(null);
+        })
+    });
+}
+
+exports.delFoodStat = function(food_id, date, done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+    pool.getConnection(function(err, connection) {
+        if (err) return done(new Error('Can\'t create connection.'));
+        var sql = 'delete from food_stats where food_id = ' + food_id + ' and _date = "' + date + '";'
+        connection.query(sql, function(err){
+            //console.log(sql);
+            //console.log(err);
+            if (err) done(new Error("Err while deleting food stat"));
+            else done(null);
+        })
+    });
+}
+
+exports.addRecStat = function(user_id, recipe_id, date, amount, done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+    pool.getConnection(function(err, connection) {
+        var sql = 'insert into recipe_stats values(' + user_id +', '+recipe_id+', "'+date+'", ' + amount + ');';
+        connection.query(sql, function(err){
+           if (err) return done(new Error('error while inserting rec stat'));
+            done(null);
+        });
+    });
+}
+
+exports.addFoodStat = function(user_id, food_id, date, amount, done){
+    var pool = state.pool;
+    if (!pool) return done(new Error('Missing database connection.'));
+    pool.getConnection(function(err, connection) {
+        var sql = 'insert into food_stats values(' + user_id +', '+food_id+', "'+date+'", ' + amount + ');';
+        connection.query(sql, function(err){
+            if (err) return done(new Error('error while inserting food stat'));
+            done(null);
+        });
+    });
+}
+

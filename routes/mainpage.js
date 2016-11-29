@@ -11,7 +11,7 @@ var restrict = function (req, res, next){
 }
 
 router.get('/',restrict, function(req, res, next) {
-  db.findRecipesByUserId(req.session.user_id, function (err, result) {
+  /*db.findRecipesByUserId(req.session.user_id, function (err, result) {
       if (err) {
         req.errStatus = 4;
         next(err);
@@ -49,6 +49,50 @@ router.get('/',restrict, function(req, res, next) {
 
         }
       }
+  });*/
+
+  res.render('mainpage', {user_name: req.session.user_name});
+});
+
+router.get('/getrecipes',restrict, function(req, res, next) {
+  db.findRecipesByUserId(req.session.user_id, function (err, result) {
+    if (err) {
+      req.errStatus = 4;
+      next(err);
+    } else {
+      if (result.length == 0) {
+        res.json([]);
+      } else {
+        var recipe_ids = [];
+        for (var i = 0; i < result.length; ++i)
+          recipe_ids.push(result[i].recipe_id);
+        db.findFoodByListOfRecipeIds( recipe_ids, function (err, result2) {
+          if (err) {
+            req.errStatus = 4;
+            next(err);
+          } else {
+            var getRecipeById = {}
+
+            for (var i = 0; i < result.length; ++i)
+              getRecipeById[result[i].recipe_id] = result[i];
+
+            for (var key in getRecipeById) {
+              getRecipeById[key].data = []
+            }
+
+            for (var i = 0; i < result2.length; ++i) {
+              var ingridients = {
+                name: result2[i].food_name,
+                amount: result2[i].amount
+              }
+              getRecipeById[result2[i].recipe_id].data.push(ingridients);
+            }
+            res.json(result);
+          }
+        })
+
+      }
+    }
   });
 });
 
@@ -85,13 +129,47 @@ router.post('/add', function(req, res, next){
   var recipeInf = JSON.parse(req.body.recipeInf);
   recipeInf.user_id = req.session.user_id;
   var ingrInf = JSON.parse(req.body.ingridientsInf);
-
   db.insertNewRecipe(recipeInf, ingrInf, function(err, recipe_id){
     if(err) return next(err);
     console.log('done!');
     res.json({recipe_id: recipe_id});
   })
   //res.json(data);
+});
+
+router.post('/getstats', function(req, res, next){
+  db.getStats(req.session.user_id, req.body.date, function(err, data){
+    if (err) return next(err);
+    res.json(data);
+  })
+});
+
+router.post('/delrecstats', function(req, res, next){
+    db.delRecipeStat(req.body.recipe_id, req.body.date, function(err){
+      if (err) next(err);
+      else res.sendStatus(200);
+    })
+});
+
+router.post('/delfoodstats', function(req, res, next){
+  db.delFoodStat(req.body.food_id, req.body.date, function(err){
+    if (err) next(err);
+    else res.sendStatus(200);
+  })
+});
+
+router.post('/addrecstat', function(req, res, next){
+  db.addRecStat(req.session.user_id, req.body.recipe_id, req.body.date, req.body.amount, function(err){
+    if (err) next(err)
+    else res.sendStatus(200);
+  })
+});
+
+router.post('/addfoodstat', function(req, res, next){
+  db.addFoodStat(req.session.user_id, req.body.food_id, req.body.date, req.body.amount, function(err){
+    if (err) next(err)
+    else res.sendStatus(200);
+  })
 });
 
 module.exports = router;

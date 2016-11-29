@@ -73,7 +73,7 @@ router.post('/registration',checkDataReg, function(req, res, next) {
                     user_password: req.body.user_password,
                     user_email: req.body.user_email
                 };
-                db.insertUser(user, function (err) {
+                db.insertUser(user, function (err, user_id) {
                     if (err) {
                         req.errStatus = 4;
                         next(new Error("database error while inserting"));
@@ -83,7 +83,7 @@ router.post('/registration',checkDataReg, function(req, res, next) {
                             console.log('registred!');
                             req.session.auth = true
                             req.session.user_name = user.user_name;
-                            req.session.user_id = user.user_id;
+                            req.session.user_id = user_id;
                             res.sendStatus(200);
 
                         })
