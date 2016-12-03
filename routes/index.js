@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db.js');
 
+
 var redirectAuth = function(req, res, next){
     if (req.session.auth) {
         res.redirect("http://localhost:3001/mainpage");
@@ -93,5 +94,26 @@ router.post('/registration',checkDataReg, function(req, res, next) {
         }
     });
 });
+
+/*router.get('/getxml', function(req, res, next){
+    var root = builder.create('squares');
+    root.com('f(x) = x^2');
+    for(var i = 1; i <= 5; i++)
+    {
+        var item = root.ele('data');
+        item.att('x', i);
+        item.att('y', i * i);
+    }
+    var str = root.end({
+        pretty: true,
+        indent: '  ',
+        newline: '\n',
+        allowEmpty: false
+    });
+    console.log(str);
+    res.header('Content-Type', 'application/xml');
+    res.header('Content-Disposition', 'attachment; filename="recipes.xml"');
+    res.send(str);
+});*/
 
 module.exports = router;

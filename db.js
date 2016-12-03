@@ -24,8 +24,8 @@ exports.connect = function(mode, done) {
         database: mode === exports.MODE_PRODUCTION ? PRODUCTION_DB : TEST_DB
     });
 
-    state.mode = mode
-    done()
+    state.mode = mode;
+    done();
 }
 
 exports.get = function() {

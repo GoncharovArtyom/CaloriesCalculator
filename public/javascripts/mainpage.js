@@ -899,11 +899,11 @@ $(document).ready( function() {
                             var weight = input.val();
                             data.recipe_id = $(elem).attr('recipe_id');
                             data.recipe_name = $(elem).children('.textdivstat').text();
-                            data.calories = +$(elem).attr('calories')/100 * weight;
-                            data.proteins = +$(elem).attr('proteins')/100 * weight;
-                            data.lipids = +$(elem).attr('lipids')/100 * weight;
-                            data.carbs = +$(elem).attr('carbs')/100 * weight;
-                            data.amount = weight;
+                            data.calories = Math.round(+$(elem).attr('calories')/100 * weight);
+                            data.proteins = Math.round(+$(elem).attr('proteins')/100 * weight);
+                            data.lipids = Math.round(+$(elem).attr('lipids')/100 * weight);
+                            data.carbs = Math.round(+$(elem).attr('carbs')/100 * weight);
+                            data.amount = Math.round(weight);
 
                             addStatRow(data);
 
@@ -927,11 +927,11 @@ $(document).ready( function() {
                             var weight = +input.val();
                             data.food_id = $(elem).attr('food_id');
                             data.recipe_name = $(elem).children('.textdivstat').text();
-                            data.calories = +$(elem).attr('calories') /100 * weight;
-                            data.proteins = +$(elem).attr('proteins')/100 * weight;
-                            data.lipids = +$(elem).attr('lipids')/100 * weight;
-                            data.carbs = +$(elem).attr('carbs')/100 * weight;
-                            data.amount = weight;
+                            data.calories = Math.round(+$(elem).attr('calories') /100 * weight);
+                            data.proteins = Math.round(+$(elem).attr('proteins')/100 * weight);
+                            data.lipids = Math.round(+$(elem).attr('lipids')/100 * weight);
+                            data.carbs = Math.round(+$(elem).attr('carbs')/100 * weight);
+                            data.amount = Math.round(weight);
 
                             addStatRow(data);
 
@@ -951,6 +951,7 @@ $(document).ready( function() {
         });
     }
 
+    //Добавление строки в статистику за день
     var addStatRow = function(data){
         var newDivIngrRow = $(document.createElement('div'));
         if (data.food_id)
