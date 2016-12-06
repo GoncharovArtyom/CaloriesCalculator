@@ -3,10 +3,9 @@ extends layout
 block content
     link(rel='stylesheet', href='/stylesheets/mainpagestyle.css')
     script(type="text/javascript" src="/javascripts/mainpage.js")
-    h1 Hello, #{user_name}!
-    form
-        div
-            input(type="button" name="exit" id="exit" value="Выйти")
+    div#header
+        h1 Hello, #{user_name}!
+        div(type="button" name="exit" id="exit")Выйти
     div#errmessage
     h2#recipes Рецепты
     div#showrecipes
@@ -18,6 +17,11 @@ block content
                 div.floatleft.coltitle Жиры
                 div.floatleft.coltitle Углеводы
                 div.floatright.coltitle Калории
+        div#download
+            div Скачать:
+            div#xml XML
+            div#dtd DTD
+
 
     h2#addrecipe Добавить рецепт
     div#add
@@ -32,6 +36,8 @@ block content
                     div.ingrcolright.ingrtitle У
                     div.ingrcolright.ingrtitle Ж
                     div.ingrcolright.ingrtitle Б
+
+
 
 
 

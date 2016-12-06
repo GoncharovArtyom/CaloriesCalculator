@@ -1,0 +1,10 @@
+<!ELEMENT recipeList (recipe+)>
+<!ELEMENT recipe (name, calories, proteins, carbs, lipids, ingridientsList)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT calories (#PCDATA)>
+<!ELEMENT proteins (#PCDATA)>
+<!ELEMENT carbs (#PCDATA)>
+<!ELEMENT lipids (#PCDATA)>
+<!ELEMENT ingridientsList (ingridient+)>
+<!ELEMENT ingridient (name, amount)>
+<!ELEMENT amount (#PCDATA)>

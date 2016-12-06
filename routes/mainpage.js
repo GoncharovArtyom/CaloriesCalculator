@@ -12,46 +12,6 @@ var restrict = function (req, res, next){
 }
 
 router.get('/',restrict, function(req, res, next) {
-  /*db.findRecipesByUserId(req.session.user_id, function (err, result) {
-      if (err) {
-        req.errStatus = 4;
-        next(err);
-      } else {
-        if (result.length == 0) {
-          res.render('mainpage', {user_name: req.session.user_name, recipes: result});
-        } else {
-          var recipe_ids = [];
-          for (var i = 0; i < result.length; ++i)
-            recipe_ids.push(result[i].recipe_id);
-          db.findFoodByListOfRecipeIds( recipe_ids, function (err, result2) {
-            if (err) {
-              req.errStatus = 4;
-              next(err);
-            } else {
-              var getRecipeById = {}
-
-              for (var i = 0; i < result.length; ++i)
-                getRecipeById[result[i].recipe_id] = result[i];
-
-              for (var key in getRecipeById) {
-                getRecipeById[key].data = []
-              }
-
-              for (var i = 0; i < result2.length; ++i) {
-                var ingridients = {
-                  name: result2[i].food_name,
-                  amount: result2[i].amount
-                }
-                getRecipeById[result2[i].recipe_id].data.push(ingridients);
-              }
-              res.render('mainpage', {user_name: req.session.user_name, recipes: result});
-            }
-          })
-
-        }
-      }
-  });*/
-
   res.render('mainpage', {user_name: req.session.user_name});
 });
 
@@ -130,7 +90,8 @@ router.get('/getrecipesxml',restrict, function(req, res, next) {
               }
               getRecipeById[result2[i].recipe_id].data.push(ingridients);
             }
-            var root = builder.create('recipeList', {version: '1.0', encoding: 'UTF-8', standalone: true});
+            var root = builder.create('recipeList', {version: '1.0', encoding: 'UTF-8', standalone: false});
+            root.dtd('recipes.dtd');
             for (var i=0; i<result.length; ++i){
               var rec = root.ele('recipe');
               rec.ele('name').text(result[i].recipe_name);
@@ -151,7 +112,7 @@ router.get('/getrecipesxml',restrict, function(req, res, next) {
               newline: '\n',
               allowEmpty: false
             });
-            console.log(str);
+
             res.header('Content-Type', 'application/xml');
             res.header('Content-Disposition', 'attachment; filename="recipes.xml"');
             res.send(str);

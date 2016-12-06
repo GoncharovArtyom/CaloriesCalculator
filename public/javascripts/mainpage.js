@@ -530,6 +530,7 @@ $(document).ready( function() {
             }
         })
     });
+    $("#exit").mouseenter(addhoverbutton).mouseleave(removehoverbutton)
 
     //Показать/скрыть состав рецепта
     var handler1 = function () {
@@ -1041,5 +1042,21 @@ $(document).ready( function() {
 
         $("#eatentable").append(newDivIngrRow);
     }
+
+    //Скачивание файлов
+    $('#xml').mouseenter(addhoverbutton).mouseleave(removehoverbutton);
+    $('#dtd').mouseenter(addhoverbutton).mouseleave(removehoverbutton);
+    var downdloadFile = function(str) {
+        $.ajax({
+            url: str,
+            type: "GET",
+            error: function () {
+                alert(1);
+            },
+            dataType: 'application/xml'
+        });
+    }
+    $('#xml').click(function(){window.open('http://localhost:3001/mainpage/getrecipesxml')});
+    $('#dtd').click(function(){window.open('http://localhost:3001/dtd/recipes.dtd')});
 
 });

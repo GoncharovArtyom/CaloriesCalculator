@@ -10,8 +10,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host: 'localhost',
   port: '3307',
-  user: 'root',
-  password: 'ArTyOm73',
+  user: 'user',
+  password: 'password',
   database: 'session_test'
 });
 var session = require('express-session');
