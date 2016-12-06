@@ -3,106 +3,108 @@ extends layout
 block content
     link(rel='stylesheet', href='/stylesheets/mainpagestyle.css')
     script(type="text/javascript" src="/javascripts/mainpage.js")
-    div#header
-        h1 Hello, #{user_name}!
-        div(type="button" name="exit" id="exit")Выйти
-    div#errmessage
-    h2#recipes Рецепты
-    div#showrecipes
-        div#message
-        div#recipe_table
-            div#title.rowtitle.clearfix
-                div.floatleft.coltitle Название
-                div.floatleft.coltitle Белки
-                div.floatleft.coltitle Жиры
-                div.floatleft.coltitle Углеводы
-                div.floatright.coltitle Калории
-        div#download
-            div Скачать:
-            div#xml XML
-            div#dtd DTD
+    div#center
+        div#header
+            h1 Hello, #{user_name}!
+            div(type="button" name="exit" id="exit") Выйти
+        div#errmessage
+        h2#recipes Рецепты
+        div#showrecipes
+            div#message
+            div#empty.invisible Нет рецептов
+            div#recipe_table
+                div#title.rowtitle.clearfix
+                    div.floatleft.coltitle Название
+                    div.floatleft.coltitle Белки
+                    div.floatleft.coltitle Жиры
+                    div.floatleft.coltitle Углеводы
+                    div.floatright.coltitle Калории
+            div#download
+                div Скачать:
+                div#xml XML
+                div#dtd DTD
 
 
-    h2#addrecipe Добавить рецепт
-    div#add
-        div#addmessage
-        div#add1
-            div#title1 Ингридиенты
-            div#ingrtable
-                div.ingrrow.clearfix
-                    div.ingrcol.ingrtitle Название
-                    div.ingrcolright.ingrtitle Вес
-                    div.ingrcolright.ingrtitle К
-                    div.ingrcolright.ingrtitle У
-                    div.ingrcolright.ingrtitle Ж
-                    div.ingrcolright.ingrtitle Б
-
-
-
-
-
-            div#amount.clearfix
-                div.clearfix.ingrrow
-                    div#resweight.ingrcol Итого:
-                    input#resamount.ingrcolright(type= 'text' value= 0 amount= 0 disabled)
-                    div#rescalories.ingrcolright 0
-                    div#rescarbs.ingrcolright 0
-                    div#reslipids.ingrcolright 0
-                    div#resproteins.ingrcolright 0
-                div.clearfix.ingrrow
-                    div#weight100.ingrcol На 100 гр:
-                    div#amount100.ingrcolright 100
-                    div#calories100.ingrcolright 0
-                    div#carbs100.ingrcolright 0
-                    div#lipids100.ingrcolright 0
-                    div#proteins100.ingrcolright 0
-            div#name
-                input#nameinput(value= 'Название')
-
-
-        div#add2
-            div#title2 Продукты
-            input#search(type= 'text' value= 'Поиск')
-            div#foodtable
-        div#createres Создать рецепт
-
-    h2#stattitle Статистика
-
-    div#stat.invisible
-        div#statmessage
-        div#date Выберите дату:
-            -var date = new Date()
-            -date = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + (date.getDate())
-            input(type='date' value= date).clearfix
-            div Показать
-        div#eaten
-            div#eatentitle Съеденные продукты
-            div#eatentable
-                div.ingrrow.clearfix
-                    div.ingrcol.ingrtitle Название
-                    div.ingrcolright.ingrtitle Вес
-                    div.ingrcolright.ingrtitle К
-                    div.ingrcolright.ingrtitle У
-                    div.ingrcolright.ingrtitle Ж
-                    div.ingrcolright.ingrtitle Б
+        h2#addrecipe Добавить рецепт
+        div#add
+            div#addmessage
+            div#add1
+                div#title1 Ингридиенты
+                div#ingrtable
+                    div.ingrrow.clearfix
+                        div.ingrcol.ingrtitle Название
+                        div.ingrcolright.ingrtitle Вес
+                        div.ingrcolright.ingrtitle К
+                        div.ingrcolright.ingrtitle У
+                        div.ingrcolright.ingrtitle Ж
+                        div.ingrcolright.ingrtitle Б
 
 
 
-            div#eatenamount.clearfix
-                div.clearfix.ingrrow
-                    div#eatenresweight.ingrcol Итого:
-                    div#eatenresamount.ingrcolright 0
-                    div#eatenrescalories.ingrcolright 0
-                    div#eatenrescarbs.ingrcolright 0
-                    div#eatenreslipids.ingrcolright 0
-                    div#eatenresproteins.ingrcolright 0
 
-        div#statsearch
-            div#statsearchtitle Продукты
-            input#statsearchinput(type= 'text' value= 'Поиск')
-            div#statfoodtable
-                div#statrecipes Мои рецепты
-                div#statfood Продукты
+
+                div#amount.clearfix
+                    div.clearfix.ingrrow
+                        div#resweight.ingrcol Итого:
+                        input#resamount.ingrcolright(type= 'text' value= 0 amount= 0 disabled)
+                        div#rescalories.ingrcolright 0
+                        div#rescarbs.ingrcolright 0
+                        div#reslipids.ingrcolright 0
+                        div#resproteins.ingrcolright 0
+                    div.clearfix.ingrrow
+                        div#weight100.ingrcol На 100 гр:
+                        div#amount100.ingrcolright 100
+                        div#calories100.ingrcolright 0
+                        div#carbs100.ingrcolright 0
+                        div#lipids100.ingrcolright 0
+                        div#proteins100.ingrcolright 0
+                div#name
+                    input#nameinput(value= 'Название')
+
+
+            div#add2
+                div#title2 Продукты
+                input#search(type= 'text' value= 'Поиск')
+                div#foodtable
+            div#createres Создать рецепт
+
+        h2#stattitle Статистика
+
+        div#stat.invisible
+            div#statmessage
+            div#date Выберите дату:
+                -var date = new Date()
+                -date = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + (date.getDate())
+                input(type='date' value= date).clearfix
+                div Показать
+            div#eaten
+                div#eatentitle Съеденные продукты
+                div#eatentable
+                    div.ingrrow.clearfix
+                        div.ingrcol.ingrtitle Название
+                        div.ingrcolright.ingrtitle Вес
+                        div.ingrcolright.ingrtitle К
+                        div.ingrcolright.ingrtitle У
+                        div.ingrcolright.ingrtitle Ж
+                        div.ingrcolright.ingrtitle Б
+
+
+
+                div#eatenamount.clearfix
+                    div.clearfix.ingrrow
+                        div#eatenresweight.ingrcol Итого:
+                        div#eatenresamount.ingrcolright 0
+                        div#eatenrescalories.ingrcolright 0
+                        div#eatenrescarbs.ingrcolright 0
+                        div#eatenreslipids.ingrcolright 0
+                        div#eatenresproteins.ingrcolright 0
+
+            div#statsearch
+                div#statsearchtitle Продукты
+                input#statsearchinput(type= 'text' value= 'Поиск')
+                div#statfoodtable
+                    div#statrecipes Мои рецепты
+                    div#statfood Продукты
 
 //block content
     link(rel='stylesheet', href='/stylesheets/mainpagestyle.css')

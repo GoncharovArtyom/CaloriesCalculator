@@ -1,10 +1,12 @@
 extends layout
 
 block content
+  link(rel='stylesheet', href='/stylesheets/index.css')
   script(type="text/javascript" src="/javascripts/index.js")
   div#maindiv
     h1= title
     p#message Welcome to #{title}
+    div#errmessage.invisible Ошибка
     form
       div.input
         input#email(type='text' name='login')

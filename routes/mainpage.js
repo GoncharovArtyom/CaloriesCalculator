@@ -64,7 +64,7 @@ router.get('/getrecipesxml',restrict, function(req, res, next) {
       next(err);
     } else {
       if (result.length == 0) {
-        res.json([]);
+        res.sendStatus(404);
       } else {
         var recipe_ids = [];
         for (var i = 0; i < result.length; ++i)
@@ -141,7 +141,7 @@ router.get('/logout', function(req, res, next){
   res.sendStatus(200);
 });
 
-router.get('/createrecipe', function(req, res, next){
+router.get('/createrecipe', restrict, function(req, res, next){
   db.getFood(function(err, data){
     if (err){
       next(err);
@@ -151,7 +151,7 @@ router.get('/createrecipe', function(req, res, next){
   })
 });
 
-router.post('/add', function(req, res, next){
+router.post('/add', restrict, function(req, res, next){
 
 
   var recipeInf = JSON.parse(req.body.recipeInf);
@@ -165,35 +165,35 @@ router.post('/add', function(req, res, next){
   //res.json(data);
 });
 
-router.post('/getstats', function(req, res, next){
+router.post('/getstats', restrict, function(req, res, next){
   db.getStats(req.session.user_id, req.body.date, function(err, data){
     if (err) return next(err);
     res.json(data);
   })
 });
 
-router.post('/delrecstats', function(req, res, next){
+router.post('/delrecstats',restrict, function(req, res, next){
     db.delRecipeStat(req.body.recipe_id, req.body.date, function(err){
       if (err) next(err);
       else res.sendStatus(200);
     })
 });
 
-router.post('/delfoodstats', function(req, res, next){
+router.post('/delfoodstats',restrict, function(req, res, next){
   db.delFoodStat(req.body.food_id, req.body.date, function(err){
     if (err) next(err);
     else res.sendStatus(200);
   })
 });
 
-router.post('/addrecstat', function(req, res, next){
+router.post('/addrecstat',restrict, function(req, res, next){
   db.addRecStat(req.session.user_id, req.body.recipe_id, req.body.date, req.body.amount, function(err){
     if (err) next(err)
     else res.sendStatus(200);
   })
 });
 
-router.post('/addfoodstat', function(req, res, next){
+router.post('/addfoodstat',restrict, function(req, res, next){
   db.addFoodStat(req.session.user_id, req.body.food_id, req.body.date, req.body.amount, function(err){
     if (err) next(err)
     else res.sendStatus(200);

@@ -47,12 +47,14 @@ router.post('/login',checkDataLogin, function(req, res, next) {
                     res.sendStatus(200)
 
                 } else {
-                    req.errStatus = 1;
-                    next(new Error("Incorrect password"))
+                    var err = new Error("Incorrect password");
+                    err.status = 401;
+                    next(err)
                 }
             } else {
-                req.errStatus = 1;
-                next(new Error("No user with such an email"))
+                var err = new Error("No user with this email");
+                err.status = 401;
+                next(err)
             }
         }
     });
@@ -62,12 +64,12 @@ router.post('/registration',checkDataReg, function(req, res, next) {
     var email = req.body.user_email;
     db.findUserByEmail(email, function(err, result){
         if (err) {
-            req.errStatus = 4;
             next(new Error("database error while finding"));
         } else {
             if (result) {
-                req.errStatus = 2;
-                next(new Error("User already exists"));
+                var err = new Error("User already exists");
+                err.status = 401;
+                next(err);
             } else {
                 var user = {
                     user_name: req.body.user_name,
@@ -76,7 +78,6 @@ router.post('/registration',checkDataReg, function(req, res, next) {
                 };
                 db.insertUser(user, function (err, user_id) {
                     if (err) {
-                        req.errStatus = 4;
                         next(new Error("database error while inserting"));
                     } else {
                         db.get().getConnection(function(err, connection) {

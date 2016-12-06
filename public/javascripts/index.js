@@ -9,7 +9,7 @@ $(document).ready( function(){
             bool = bool || $("#name").val() == ""
         }
         if (bool){
-            alert("Заполните все поля");
+            showIndexError("Заполните все поля");
         } else {
             var data = {}
             if ($("#register").prop("checked") == false) {
@@ -22,7 +22,11 @@ $(document).ready( function(){
                         location.href = "http://localhost:3001/mainpage"
                     },
                     error: function (res_data, textStatus) {
-                        $("#message").text("Incorrect email or password")
+                        if (res_data.status == 401) {
+                            showIndexError("Неверные данные");
+                        } else {
+                            showIndexError("Ошибка сервера");
+                        }
                     }
                 });
             } else {
@@ -35,7 +39,12 @@ $(document).ready( function(){
                         location.href = "http://localhost:3001/mainpage"
                     },
                     error: function (res_data, textStatus) {
-                        $("#message").text("This email's already used")
+                        console.log(res_data);
+                        if (res_data.status == 401) {
+                            showIndexError("Почта уже используется");
+                        } else {
+                            showIndexError("Ошибка сервера");
+                        }
                     }
             })
             /*$.post("http://localhost:3001/login", data).done(function(res_data, textStatus){
@@ -52,5 +61,15 @@ $(document).ready( function(){
             $("#divname").hide(400)
             registration = false
         }
-    })
+    });
+
+    //Отображение ошибки
+    var showIndexError = function(str){
+        $('#errmessage').text(str);
+        $('#errmessage').show(400);
+    }
+    var hideIndexError = function(){
+        if ($('#errmessage').css('display')!='none')
+            $('#errmessage').hide(400);
+    }
 });

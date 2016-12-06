@@ -6,16 +6,3 @@ body {
 a {
   color: #00B7FF;
 }
-
-.input {
-  margin: 5px;
-}
-label{
-  margin-right:5px;
-  margin-left:5px;
-}
-#maindiv{
-  width:25%;
-  margin-right: auto;
-  margin-left: auto;
-}

@@ -1,0 +1,31 @@
+.input {
+    margin: 5px;
+}
+label{
+    margin-right:5px;
+    margin-left:5px;
+}
+#maindiv{
+    width:300px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#errmessage{
+    border: #FF0000 solid 1px;
+    border-radius: 5px;
+    text-align: center;
+    width: 160px;
+    padding:5px;
+    background-color: #FFDAB9;
+    margin-bottom: 5px;
+    margin:5px;
+}
+
+.invisible {
+    display: none;
+}
+
+.visible{
+    display: block;
+}

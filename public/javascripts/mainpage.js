@@ -199,10 +199,10 @@ $(document).ready( function() {
                     //Добавление элемента
                     $("#ingrtable").append(newDivIngrRow)
                 });
-
+                hideCreateError();
             },
             error: function () {
-                $("#errmessage").text('Ошибка сервера')
+                showCreateError('Ошибка сервера')
             },
             dataType: 'json'
         })
@@ -215,136 +215,135 @@ $(document).ready( function() {
             url: "http://localhost:3001/mainpage/getrecipes",
             type: "GET",
             success: function (data) {
-                if (data.length != 0) {
-                    for (var i = 0; i < data.length; ++i) {
-                        var recipe_id = data[i].recipe_id;
 
-                        var newRow = document.createElement("div");
-                        $(newRow).addClass('row');
-                        $(newRow).addClass('clearfix');
-                        $(newRow).attr('id', recipe_id);
+                for (var i = 0; i < data.length; ++i) {
+                    var recipe_id = data[i].recipe_id;
 
-                        //Name
-                        var newCol = document.createElement("div");
-                        $(newCol).addClass('floatleft');
-                        $(newCol).text(data[i].recipe_name);
-                        $(newRow).append(newCol);
+                    var newRow = document.createElement("div");
+                    $(newRow).addClass('row');
+                    $(newRow).addClass('clearfix');
+                    $(newRow).attr('id', recipe_id);
 
-                        //proteins
-                        newCol = document.createElement("div");
-                        $(newCol).addClass('floatleft');
-                        $(newCol).text(data[i].proteins);
-                        $(newRow).append(newCol);
+                    //Name
+                    var newCol = document.createElement("div");
+                    $(newCol).addClass('floatleft');
+                    $(newCol).text(data[i].recipe_name);
+                    $(newRow).append(newCol);
 
-                        //lipids
-                        newCol = document.createElement("div");
-                        $(newCol).addClass('floatleft');
-                        $(newCol).text(data[i].lipids);
-                        $(newRow).append(newCol);
+                    //proteins
+                    newCol = document.createElement("div");
+                    $(newCol).addClass('floatleft');
+                    $(newCol).text(data[i].proteins);
+                    $(newRow).append(newCol);
 
-                        //carbs
-                        newCol = document.createElement("div");
-                        $(newCol).addClass('floatleft');
-                        $(newCol).text(data[i].carbs);
-                        $(newRow).append(newCol);
+                    //lipids
+                    newCol = document.createElement("div");
+                    $(newCol).addClass('floatleft');
+                    $(newCol).text(data[i].lipids);
+                    $(newRow).append(newCol);
 
-                        //calories
-                        newCol = document.createElement("div");
-                        $(newCol).addClass('floatright');
-                        $(newCol).text(data[i].calories);
-                        $(newRow).append(newCol);
+                    //carbs
+                    newCol = document.createElement("div");
+                    $(newCol).addClass('floatleft');
+                    $(newCol).text(data[i].carbs);
+                    $(newRow).append(newCol);
 
-                        $(newRow).click(handler1);
-                        $(newRow).mouseenter(mouse1).mouseleave(mouse2);
+                    //calories
+                    newCol = document.createElement("div");
+                    $(newCol).addClass('floatright');
+                    $(newCol).text(data[i].calories);
+                    $(newRow).append(newCol);
 
-                        $("#recipe_table").append(newRow);
+                    $(newRow).click(handler1);
+                    $(newRow).mouseenter(mouse1).mouseleave(mouse2);
 
-                        //Добавление этого рецепта в статистику
-                        var newDiv = $(document.createElement('div'));
-                        newDiv.attr('recipe_id', data[i].recipe_id);
-                        newDiv.attr('proteins', data[i].proteins);
-                        newDiv.attr('lipids', data[i].lipids);
-                        newDiv.attr('carbs', data[i].carbs);
-                        newDiv.attr('calories', data[i].calories);
-                        newDiv.addClass('visible');
-                        newDiv.addClass('clearfix');
-                        var textDiv = $(document.createElement('div'));
-                        textDiv.text(data[i].recipe_name);
-                        textDiv.addClass('fll');
-                        textDiv.addClass('textdivstat');
-                        newDiv.append(textDiv);
-                        newDiv.addClass('recipestat')
-                        var newInput = $(document.createElement('input'));
-                        newInput.attr('type', 'text');
-                        newInput.addClass('flr');
-                        newInput.addClass('statinput');
-                        newInput.addClass('invisible');
-                        newDiv.append(newInput);
-                        var adddiv = $(document.createElement('div'));
-                        adddiv.addClass('adddiv');
-                        adddiv.addClass('invisible');
-                        adddiv.text('Добавить');
-                        newDiv.append(adddiv);
-                        handlerStatElems(newDiv);
-                        $("#statrecipes").append(newDiv)
+                    $("#recipe_table").append(newRow);
 
-                        //INGRIDIENTS
-                        var elem = document.createElement('div');
-                        $(elem).addClass('ingr');
-                        $(elem).attr('id', recipe_id + 'ingr');
+                    //Добавление этого рецепта в статистику
+                    var newDiv = $(document.createElement('div'));
+                    newDiv.attr('recipe_id', data[i].recipe_id);
+                    newDiv.attr('proteins', data[i].proteins);
+                    newDiv.attr('lipids', data[i].lipids);
+                    newDiv.attr('carbs', data[i].carbs);
+                    newDiv.attr('calories', data[i].calories);
+                    newDiv.addClass('visible');
+                    newDiv.addClass('clearfix');
+                    var textDiv = $(document.createElement('div'));
+                    textDiv.text(data[i].recipe_name);
+                    textDiv.addClass('fll');
+                    textDiv.addClass('textdivstat');
+                    newDiv.append(textDiv);
+                    newDiv.addClass('recipestat')
+                    var newInput = $(document.createElement('input'));
+                    newInput.attr('type', 'text');
+                    newInput.addClass('flr');
+                    newInput.addClass('statinput');
+                    newInput.addClass('invisible');
+                    newDiv.append(newInput);
+                    var adddiv = $(document.createElement('div'));
+                    adddiv.addClass('adddiv');
+                    adddiv.addClass('invisible');
+                    adddiv.text('Добавить');
+                    newDiv.append(adddiv);
+                    handlerStatElems(newDiv);
+                    $("#statrecipes").append(newDiv)
 
+                    //INGRIDIENTS
+                    var elem = document.createElement('div');
+                    $(elem).addClass('ingr');
+                    $(elem).attr('id', recipe_id + 'ingr');
+
+                    newRow = document.createElement('div');
+                    $(newRow).addClass('rowtitle2');
+                    $(newRow).addClass('clearfix');
+
+                    newCol = document.createElement('div');
+                    $(newCol).addClass('floatleft2');
+                    $(newCol).addClass('coltitle2');
+                    $(newCol).text("Ингридиенты");
+                    $(newRow).append(newCol);
+
+                    newCol = document.createElement('div');
+                    $(newCol).addClass('floatright2');
+                    $(newCol).addClass('coltitle2');
+                    $(newCol).text("Количество");
+                    $(newRow).append(newCol);
+
+                    $(elem).append(newRow);
+
+                    for (var j = 0; j < data[i].data.length; ++j) {
                         newRow = document.createElement('div');
-                        $(newRow).addClass('rowtitle2');
+                        $(newRow).addClass('row2');
                         $(newRow).addClass('clearfix');
 
                         newCol = document.createElement('div');
                         $(newCol).addClass('floatleft2');
-                        $(newCol).addClass('coltitle2');
-                        $(newCol).text("Ингридиенты");
+                        $(newCol).text(data[i].data[j].name);
                         $(newRow).append(newCol);
 
                         newCol = document.createElement('div');
                         $(newCol).addClass('floatright2');
-                        $(newCol).addClass('coltitle2');
-                        $(newCol).text("Количество");
+                        $(newCol).text(data[i].data[j].amount + ' гр');
                         $(newRow).append(newCol);
 
                         $(elem).append(newRow);
-
-                        for (var j = 0; j < data[i].data.length; ++j) {
-                            newRow = document.createElement('div');
-                            $(newRow).addClass('row2');
-                            $(newRow).addClass('clearfix');
-
-                            newCol = document.createElement('div');
-                            $(newCol).addClass('floatleft2');
-                            $(newCol).text(data[i].data[j].name);
-                            $(newRow).append(newCol);
-
-                            newCol = document.createElement('div');
-                            $(newCol).addClass('floatright2');
-                            $(newCol).text(data[i].data[j].amount + ' гр');
-                            $(newRow).append(newCol);
-
-                            $(elem).append(newRow);
-                        }
-
-                        var del = document.createElement('div');
-                        $(del).addClass('delete');
-                        $(del).text("Удалить");
-                        $(del).attr('del_id', recipe_id);
-                        $(del).click(deleteHandler);
-
-                        $(elem).append(del);
-
-                        $("#recipe_table").append(elem);
                     }
-                } else {
-                    $("#message").text('Нет рецептов')
+
+                    var del = document.createElement('div');
+                    $(del).addClass('delete');
+                    $(del).text("Удалить");
+                    $(del).attr('del_id', recipe_id);
+                    $(del).click(deleteHandler);
+
+                    $(elem).append(del);
+
+                    $("#recipe_table").append(elem);
                 }
+                hideRecipesError();
+                messageIfNoRecipes();
             },
             error: function () {
-                $("#errmessage").text('Ошибка сервера')
+                showRecipesError('Ошибка сервера')
             },
             dataType: 'json'
         })
@@ -353,7 +352,8 @@ $(document).ready( function() {
 
     //Загрузка статистики
     var date = new Date();
-    var dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
+    var day =date.getDate();
+    var dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + ((day.length == 2)? day:'0'+ day);
     var loadStats = function (dateStr) {
         $.ajax({
             url: "http://localhost:3001/mainpage/getstats",
@@ -453,15 +453,17 @@ $(document).ready( function() {
                     }
                 }
                 calcSum();
+                hideStatError();
             },
             error: function (err) {
-                $('#statmessage').text("Ошибка");
+                showStatError('Ошибка сервера');
             },
             data: {date: dateStr},
             dataType: 'json'
         })
     }
     $("#date input").attr('date', dateStr);
+    $("#date input").val(dateStr);
     loadStats(dateStr);
 
     //Изменение даты в статистике
@@ -571,12 +573,16 @@ $(document).ready( function() {
             success: function () {
                 $('#' + id).hide(400);
                 $('#' + id + 'ingr').hide(400);
-                setTimeout($('#' + id).detach, 400);
-                setTimeout($('#' + id + 'ingr').detach, 400);
+                setTimeout(function(){
+                    $('#' + id).detach();
+                    $('#' + id + 'ingr').detach();
+                    messageIfNoRecipes();
+                }, 400);
                 $("#statrecipes").children("[recipe_id = " + id + "]").detach();
+                hideRecipesError();
             },
             error: function () {
-                $("#message").text('Ошибка сервера')
+                showRecipesError('Ошибка сервера');
             }
         })
     };
@@ -700,12 +706,12 @@ $(document).ready( function() {
     $("#createres").click(function () {
         var name = $("#nameinput").val();
         if (name == "" || name == "Название") {
-            $("#addmessage").text("Введите название");
+            showCreateError("Введите название");
         } else {
             if ($("#ingrtable").children().length == 1) {
-                $("#addmessage").text("Добавьте ингридиенты");
+                showCreateError("Добавьте ингридиенты");
             } else {
-                $("#addmessage").text("");
+                hideCreateError();
                 var newRecipe = {};
                 newRecipe.recipe_name = name;
                 newRecipe.proteins = $("#proteins100").text();
@@ -772,6 +778,7 @@ $(document).ready( function() {
                         $(newRow).mouseenter(mouse1).mouseleave(mouse2);
 
                         $("#recipe_table").append(newRow);
+                        messageIfNoRecipes();
 
                         //INGRIDIENTS
                         var elem = document.createElement('div');
@@ -854,9 +861,11 @@ $(document).ready( function() {
                         newDiv.append(adddiv);
                         handlerStatElems(newDiv);
                         $("#statrecipes").append(newDiv)
+
+                        hideCreateError();
                     },
                     error: function () {
-                        $("#addmessage").text('Ошибка сервера')
+                        showCreateError('Ошибка сервера');
                     },
                     dataType: 'json'
                 })
@@ -889,13 +898,15 @@ $(document).ready( function() {
         adddiv.click(function () {
             $("#statmessage").text('');
             if (Number(input.val()) == 0 || Number(input.val()) == NaN) {
-                $("#statmessage").text('Введите количество');
+                showStatError('Введите количество');
             } else {
+                hideStatError();
                 if ($(elem).attr('recipe_id')) {
                     $.ajax({
                         url: "http://localhost:3001/mainpage/addrecstat",
                         type: "POST",
                         success: function () {
+                            hideStatError();
                             var data = {}
                             var weight = input.val();
                             data.recipe_id = $(elem).attr('recipe_id');
@@ -911,7 +922,7 @@ $(document).ready( function() {
                             calcSum();
                         },
                         error: function () {
-                            $("#statmessage").text('Ошибка сервера');
+                            showStatError('Ошибка сервера');
                         },
                         data: {
                             recipe_id: $(elem).attr('recipe_id'),
@@ -1009,6 +1020,7 @@ $(document).ready( function() {
                     url: "http://localhost:3001/mainpage/delrecstats",
                     type: "POST",
                     success: function () {
+                        hideStatError();
                         $(elem).hide(400);
                         setTimeout(function () {
                             $(elem).detach();
@@ -1016,7 +1028,7 @@ $(document).ready( function() {
                         }, 400);
                     },
                     error: function () {
-                        $("#statmessage").text("Ошибка сервера");
+                        showStatError("Ошибка сервера");
                     },
                     data: data
                 });
@@ -1026,6 +1038,7 @@ $(document).ready( function() {
                     url: "http://localhost:3001/mainpage/delfoodstats",
                     type: "POST",
                     success: function () {
+                        hideStatError();
                         $(elem).hide(400);
                         setTimeout(function () {
                             $(elem).detach();
@@ -1033,7 +1046,7 @@ $(document).ready( function() {
                         }, 400);
                     },
                     error: function () {
-                        $("#statmessage").text("Ошибка сервера");
+                        showStatError("Ошибка сервера");
                     },
                     data: data
                 });
@@ -1059,4 +1072,52 @@ $(document).ready( function() {
     $('#xml').click(function(){window.open('http://localhost:3001/mainpage/getrecipesxml')});
     $('#dtd').click(function(){window.open('http://localhost:3001/dtd/recipes.dtd')});
 
+    //Проверка, есть ли рецепты
+    var messageIfNoRecipes = function(){
+        if ($("#recipe_table").children().length == 1){
+            $("#recipe_table").addClass('invisible');
+            $("#recipe_table").removeClass('visible');
+
+            $("#download").addClass('invisible');
+            $("#download").removeClass('visible');
+
+            $("#empty").removeClass('invisible');
+            $("#empty").addClass('visible');
+        } else {
+            $("#recipe_table").addClass('visible');
+            $("#recipe_table").removeClass('invisible');
+
+            $("#download").addClass('visible');
+            $("#download").removeClass('invisible');
+
+            $("#empty").removeClass('visible');
+            $("#empty").addClass('invisible');
+        }
+    }
+
+    //Отображение ошибок
+    var showRecipesError = function(str){
+        $('#message').text(str);
+        $('#message').show(400);
+    }
+    var hideRecipesError = function(){
+        if ($('#message').css('display')!='none')
+            $('#message').hide(400);
+    }
+    var showCreateError = function(str){
+        $('#addmessage').text(str);
+        $('#addmessage').show(400);
+    }
+    var hideCreateError = function(){
+        if ($('#addmessage').css('display')!='none')
+            $('#addmessage').hide(400);
+    }
+    var showStatError = function(str){
+        $('#statmessage').text(str);
+        $('#statmessage').show(400);
+    }
+    var hideStatError = function(){
+        if ($('#statmessage').css('display')!='none')
+            $('#statmessage').hide(400);
+    }
 });
